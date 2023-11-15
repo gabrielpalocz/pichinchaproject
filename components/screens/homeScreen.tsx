@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, View, Button} from 'react-native';
 import type {HomeScreenProps} from '../types/typesFile';
 
+// Momentary home screen, test purpose.
 function HomeScreen({navigation}: HomeScreenProps) {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
