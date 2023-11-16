@@ -181,6 +181,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     borderRadius: 5,
     backgroundColor: 'white',
+    color: 'black',
   },
   containerFlatList: {
     borderWidth: 1,
