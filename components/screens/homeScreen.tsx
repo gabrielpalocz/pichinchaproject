@@ -103,6 +103,10 @@ const Item = ({item, onPress}: ItemProps) => (
   </TouchableOpacity>
 );
 
+const ItemSeparator = () => {
+  return <View style={styles.separator} />;
+};
+
 function HomeScreen({navigation}: HomeScreenProps) {
   const [data, setData] = useState<any>(dataTest);
   const [searchText, setSearchText] = useState<string>('');
@@ -159,6 +163,7 @@ function HomeScreen({navigation}: HomeScreenProps) {
         renderItem={({item}) => <Item item={item} onPress={() => {}} />}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.containerFlatList}
+        ItemSeparatorComponent={ItemSeparator}
       />
       <Button
         title="Go to Details"
@@ -192,8 +197,6 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: 'white',
     padding: 10,
-    borderBottomWidth: 1,
-    borderColor: '#d6d8db',
   },
   itemViewContainer: {
     flex: 1,
@@ -212,6 +215,11 @@ const styles = StyleSheet.create({
   rightArrow: {
     marginRight: 15,
     color: 'black',
+  },
+  separator: {
+    height: 1,
+    width: '100%',
+    backgroundColor: '#d6d8db',
   },
 });
 
