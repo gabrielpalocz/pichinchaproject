@@ -111,35 +111,36 @@ function HomeScreen({navigation}: HomeScreenProps) {
   const [data, setData] = useState<any>(dataTest);
   const [searchText, setSearchText] = useState<string>('');
 
-  // const authorId = '813498482';
+  const authorId = '813498482';
 
-  // const baseUrl =
-  //   'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros';
+  const baseUrl =
+    'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros';
 
-  // // GET all data
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(`${baseUrl}/bp/products`, {
-  //         method: 'GET',
-  //         headers: {
-  //           authorId,
-  //         },
-  //       });
+  // GET all data
+  // =========USAR CON focusEffect====================
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${baseUrl}/bp/products`, {
+          method: 'GET',
+          headers: {
+            authorId,
+          },
+        });
 
-  //       if (!response.ok) {
-  //         throw new Error(`${response.status}`);
-  //       }
+        if (!response.ok) {
+          throw new Error(`${response.status}`);
+        }
 
-  //       const responseData = await response.json();
-  //       setData(responseData);
-  //     } catch (error) {
-  //       Alert.alert('Ha ocurrido un error', `${error}`);
-  //     }
-  //   };
+        const responseData = await response.json();
+        setData(responseData);
+      } catch (error) {
+        Alert.alert('Ha ocurrido un error', `${error}`);
+      }
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
 
   const handleSearch = (text: string) => {
     setSearchText(text);
@@ -168,6 +169,7 @@ function HomeScreen({navigation}: HomeScreenProps) {
         placeholderTextColor={'black'}
         onChangeText={handleSearch}
         value={searchText}
+        inputMode="search"
       />
       <FlatList
         data={data}
