@@ -24,7 +24,19 @@ function App(): JSX.Element {
             },
           }}
         />
-        <Stack.Screen name="Details" component={DetailsScreen} />
+        <Stack.Screen
+          name="Details"
+          component={DetailsScreen}
+          options={{
+            title: 'BANCO PICHINCHA',
+            headerTitleAlign: 'center',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 16,
+              color: '#203668',
+            },
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
