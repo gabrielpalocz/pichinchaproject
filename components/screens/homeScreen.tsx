@@ -17,8 +17,8 @@ type ItemData = {
   name: string;
   description: string;
   logo: string;
-  date_release: Date | null;
-  date_revision: Date | null;
+  date_release: Date;
+  date_revision: Date;
 };
 
 const dateRelease = new Date('2023-02-01').toISOString();
@@ -29,56 +29,56 @@ const dataTest = [
   {
     id: '123455',
     name: 'one',
-    description: '',
-    logo: '',
+    description: 'Tarjeta de consumo bajo la modalidad de credito',
+    logo: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
     date_release: dateRelease,
     date_revision: dateRevision,
   },
   {
     id: '123456',
     name: 'two',
-    description: '',
-    logo: '',
+    description: 'Tarjeta de consumo bajo la modalidad de credito',
+    logo: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
     date_release: dateRelease,
     date_revision: dateRevision,
   },
   {
     id: '123457',
     name: 'three',
-    description: '',
-    logo: '',
+    description: 'Tarjeta de consumo bajo la modalidad de credito',
+    logo: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
     date_release: dateRelease,
     date_revision: dateRevision,
   },
   {
     id: '123458',
     name: 'four',
-    description: '',
-    logo: '',
+    description: 'Tarjeta de consumo bajo la modalidad de credito',
+    logo: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
     date_release: dateRelease,
     date_revision: dateRevision,
   },
   {
     id: '123459',
     name: 'five',
-    description: '',
-    logo: '',
+    description: 'Tarjeta de consumo bajo la modalidad de credito',
+    logo: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
     date_release: dateRelease,
     date_revision: dateRevision,
   },
   {
     id: '123460',
     name: 'six',
-    description: '',
-    logo: '',
+    description: 'Tarjeta de consumo bajo la modalidad de credito',
+    logo: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
     date_release: dateRelease,
     date_revision: dateRevision,
   },
   {
     id: '123461',
     name: 'seven',
-    description: '',
-    logo: '',
+    description: 'Tarjeta de consumo bajo la modalidad de credito',
+    logo: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
     date_release: dateRelease,
     date_revision: dateRevision,
   },
@@ -92,11 +92,11 @@ type ItemProps = {
 const Item = ({item, onPress}: ItemProps) => (
   <TouchableOpacity onPress={onPress} style={styles.item}>
     <View style={styles.itemViewContainer}>
-      <View>
+      <View style={styles.itemTextsContainer}>
         <Text style={styles.title}>{item.name}</Text>
         <Text style={styles.subTitle}>ID: {item.id}</Text>
       </View>
-      <View>
+      <View style={styles.rightArrowContainer}>
         <Text style={styles.rightArrow}>&gt;</Text>
       </View>
     </View>
@@ -189,6 +189,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
+    backgroundColor: 'white',
   },
   input: {
     borderColor: '#d6d8db',
@@ -216,16 +217,23 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  itemTextsContainer: {
+    flex: 1,
+  },
   title: {
+    flex: 1,
     fontSize: 16,
     color: 'black',
   },
   subTitle: {
+    flex: 1,
     fontSize: 12,
     color: 'black',
   },
+  rightArrowContainer: {
+    marginHorizontal: 15,
+  },
   rightArrow: {
-    marginRight: 15,
     color: 'black',
   },
   separator: {

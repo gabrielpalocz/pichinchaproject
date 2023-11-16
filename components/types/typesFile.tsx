@@ -8,8 +8,8 @@ export type RootStackParamList = {
     name: string;
     description: string;
     logo: string;
-    date_release: Date | null;
-    date_revision: Date | null;
+    date_release: Date;
+    date_revision: Date;
   };
 };
 export type HomeScreenProps = NativeStackScreenProps<
