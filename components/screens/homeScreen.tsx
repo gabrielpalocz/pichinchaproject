@@ -178,7 +178,9 @@ function HomeScreen({navigation}: HomeScreenProps) {
         contentContainerStyle={styles.containerFlatList}
         ItemSeparatorComponent={ItemSeparator}
       />
-      <TouchableOpacity style={styles.addButton} onPress={() => {}}>
+      <TouchableOpacity
+        style={styles.addButton}
+        onPress={() => navigation.navigate('Register')}>
         <Text style={styles.addButtonText}>Agregar</Text>
       </TouchableOpacity>
     </View>

@@ -11,6 +11,7 @@ export type RootStackParamList = {
     date_release: Date;
     date_revision: Date;
   };
+  Register: undefined;
 };
 export type HomeScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -21,3 +22,7 @@ export type DetailsScreenProps = NativeStackScreenProps<
   'Details'
 >;
 export type DetailsScreenRouteProp = RouteProp<RootStackParamList, 'Details'>;
+export type RegisterScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'Register'
+>;
