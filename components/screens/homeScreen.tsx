@@ -21,8 +21,8 @@ type ItemData = {
   date_revision: Date | null;
 };
 
-const dateRelease = new Date('2023-02-01');
-const dateRevision = new Date('2024-02-01');
+const dateRelease = new Date('2023-02-01').toISOString();
+const dateRevision = new Date('2024-02-01').toISOString();
 
 // Momentary data, test purpose.
 const dataTest = [
@@ -149,6 +149,17 @@ function HomeScreen({navigation}: HomeScreenProps) {
     setData(filteredData);
   };
 
+  const navigateToDetails = (item: ItemData) => {
+    navigation.navigate('Details', {
+      id: item.id,
+      name: item.name,
+      description: item.description,
+      logo: item.logo,
+      date_release: item.date_release,
+      date_revision: item.date_revision,
+    });
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -160,15 +171,16 @@ function HomeScreen({navigation}: HomeScreenProps) {
       />
       <FlatList
         data={data}
-        renderItem={({item}) => <Item item={item} onPress={() => {}} />}
+        renderItem={({item}) => (
+          <Item item={item} onPress={() => navigateToDetails(item)} />
+        )}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.containerFlatList}
         ItemSeparatorComponent={ItemSeparator}
       />
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
-      />
+      <TouchableOpacity style={styles.addButton} onPress={() => {}}>
+        <Text style={styles.addButtonText}>Agregar</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -220,6 +232,17 @@ const styles = StyleSheet.create({
     height: 1,
     width: '100%',
     backgroundColor: '#d6d8db',
+  },
+  addButton: {
+    backgroundColor: '#ffdd00',
+    borderRadius: 5,
+    marginVertical: 30,
+    paddingVertical: 15,
+  },
+  addButtonText: {
+    color: '#203668',
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
 });
 
