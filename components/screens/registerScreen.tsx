@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
@@ -80,13 +81,12 @@ function RegisterScreen({navigation}: RegisterScreenProps) {
       );
 
       if (response.ok) {
-        console.log('Datos enviados correctamente');
-        console.log(response);
+        navigation.goBack();
       } else {
-        console.error('Error al enviar datos:', response.status);
+        Alert.alert('Ha ocurrido un error', `${response.status}`);
       }
     } catch (error) {
-      console.error('Error en la solicitud:', error);
+      Alert.alert('Ha ocurrido un error', `${error}`);
     }
   };
 
