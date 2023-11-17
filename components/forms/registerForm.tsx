@@ -128,7 +128,7 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
               <TextInput
                 style={[
                   styles.input,
-                  touched.id && errors.id
+                  touched.name && errors.name
                     ? styles.onErrorBorder
                     : styles.onNormalBorder,
                 ]}
@@ -143,7 +143,7 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
               <TextInput
                 style={[
                   styles.input,
-                  touched.id && errors.id
+                  touched.description && errors.description
                     ? styles.onErrorBorder
                     : styles.onNormalBorder,
                 ]}
@@ -158,7 +158,7 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
               <TextInput
                 style={[
                   styles.input,
-                  touched.id && errors.id
+                  touched.logo && errors.logo
                     ? styles.onErrorBorder
                     : styles.onNormalBorder,
                 ]}
@@ -173,7 +173,7 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
               <TextInput
                 style={[
                   styles.input,
-                  touched.id && errors.id
+                  touched.date_release && errors.date_release
                     ? styles.onErrorBorder
                     : styles.onNormalBorder,
                 ]}
