@@ -1,18 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, {Fragment} from 'react';
-import {
-  Text,
-  View,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  Alert,
-} from 'react-native';
-import {Formik} from 'formik';
-import * as yup from 'yup';
+import React from 'react';
+import {Text, View, StyleSheet, Alert} from 'react-native';
 import type {EditScreenProps, EditScreenRouteProp} from '../types/typesFile';
 import {useRoute} from '@react-navigation/native';
+import EditForm from '../forms/editForm';
+import {authorId, baseUrl} from '../../constants';
 
 interface Values {
   id: string;
@@ -23,69 +15,56 @@ interface Values {
   date_revision: string;
 }
 
-const validationSchema = yup.object().shape({
-  id: yup
-    .string()
-    .min(3, 'Muy Corto!')
-    .max(10, 'Muy Largo!')
-    .required('Este campo es requerido!'),
-  name: yup
-    .string()
-    .min(5, 'Muy Corto!')
-    .max(100, 'Muy Largo!')
-    .required('Este campo es requerido!'),
-  description: yup
-    .string()
-    .min(10, 'Muy Corto!')
-    .max(200, 'Muy Largo!')
-    .required('Este campo es requerido!'),
-  logo: yup.string().required('Este campo es requerido!'),
-  date_release: yup.string().required('Este campo es requerido!'),
-  date_revision: yup.string().required('Este campo es requerido!'),
-});
+type ItemData = {
+  id: string;
+  name: string;
+  description: string;
+  logo: string;
+  date_release: Date;
+  date_revision: Date;
+};
 
 function EditScreen({navigation}: EditScreenProps) {
   const route = useRoute<EditScreenRouteProp>();
   const {id, name, description, logo, date_release, date_revision} =
     route.params;
 
-  function convertToFormattedDate(isoDate: Date): string {
-    const dateObj = new Date(isoDate);
+  const convertDatesToStrings = (values: Values): Values => {
+    return {
+      ...values,
+      date_release: values.date_release.toString(),
+      date_revision: values.date_revision.toString(),
+    };
+  };
 
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const day = String(dateObj.getDate()).padStart(2, '0');
+  const navigateBackToDetails = (values: Values) => {
+    navigation.navigate({
+      name: 'Details',
+      params: {
+        id: values.id,
+        name: values.name,
+        description: values.description,
+        logo: values.logo,
+        date_release: new Date(new Date(values.date_release).toISOString()),
+        date_revision: new Date(new Date(values.date_revision).toISOString()),
+      },
+      merge: true,
+    });
+  };
 
-    return `${year}-${month}-${day}`;
-  }
-  const authorId = '813498482';
   const handleOnSubmit = async (values: Values) => {
     try {
-      const response = await fetch(
-        'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/bp/products',
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            authorId,
-          },
-          body: JSON.stringify(values),
+      const response = await fetch(`${baseUrl}/bp/products`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          authorId,
         },
-      );
+        body: JSON.stringify(values),
+      });
 
       if (response.ok) {
-        navigation.navigate({
-          name: 'Details',
-          params: {
-            id: values.id,
-            name: values.name,
-            description: values.description,
-            logo: values.logo,
-            date_release: new Date(values.date_release),
-            date_revision: new Date(values.date_revision),
-          },
-          merge: true,
-        });
+        navigateBackToDetails(values);
       } else {
         Alert.alert('Ha ocurrido un error', `${response.status}`);
       }
@@ -97,135 +76,17 @@ function EditScreen({navigation}: EditScreenProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.formText}>Formulario de Editar</Text>
-
-      <Formik
-        initialValues={{
+      <EditForm
+        onSubmit={e => handleOnSubmit(e)}
+        data={{
           id,
           name,
           description,
           logo,
-          date_release: convertToFormattedDate(date_release),
-          date_revision: convertToFormattedDate(date_revision),
+          date_release,
+          date_revision,
         }}
-        validationSchema={validationSchema}
-        onSubmit={handleOnSubmit}>
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          resetForm,
-          values,
-          errors,
-          touched,
-        }) => (
-          <Fragment>
-            <ScrollView>
-              <View style={styles.contentView}>
-                <Text style={styles.titleField}>ID</Text>
-                <TextInput
-                  style={[styles.input, styles.disabledTextInput]}
-                  onChangeText={handleChange('id')}
-                  onBlur={handleBlur('id')}
-                  value={values.id}
-                  editable={false}
-                />
-                {touched.id && errors.id && (
-                  <Text style={styles.onError}>{errors.id}</Text>
-                )}
-                <Text style={styles.titleField}>Nombre</Text>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={handleChange('name')}
-                  onBlur={handleBlur('name')}
-                  value={values.name}
-                />
-                {touched.name && errors.name && (
-                  <Text style={styles.onError}>{errors.name}</Text>
-                )}
-                <Text style={styles.titleField}>Descripción</Text>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={handleChange('description')}
-                  onBlur={handleBlur('description')}
-                  value={values.description}
-                />
-                {touched.description && errors.description && (
-                  <Text style={styles.onError}>{errors.description}</Text>
-                )}
-                <Text style={styles.titleField}>Logo</Text>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={handleChange('logo')}
-                  onBlur={handleBlur('logo')}
-                  value={values.logo}
-                />
-                {touched.logo && errors.logo && (
-                  <Text style={styles.onError}>{errors.logo}</Text>
-                )}
-                <Text style={styles.titleField}>Fecha de Liberación</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="YYYY-MM-DD"
-                  placeholderTextColor={'gray'}
-                  onChangeText={text => {
-                    handleChange('date_release')(text);
-                    const enteredDate = new Date(text);
-                    if (!isNaN(enteredDate.getTime())) {
-                      const oneYearLater = new Date(
-                        enteredDate.getFullYear() + 1,
-                        enteredDate.getMonth(),
-                        enteredDate.getDate(),
-                      );
-                      handleChange('date_revision')(
-                        convertToFormattedDate(oneYearLater),
-                      );
-                    }
-                  }}
-                  onBlur={handleBlur('date_release')}
-                  value={values.date_release}
-                />
-                {touched.date_release && errors.date_release && (
-                  <Text style={styles.onError}>{errors.date_release}</Text>
-                )}
-                <Text style={styles.titleField}>Fecha de Revisión</Text>
-                <TextInput
-                  style={[styles.input, styles.disabledTextInput]}
-                  onChangeText={handleChange('date_revision')}
-                  onBlur={handleBlur('date_revision')}
-                  value={values.date_revision}
-                  editable={false}
-                />
-                {touched.date_revision && errors.date_revision && (
-                  <Text style={styles.onError}>{errors.date_revision}</Text>
-                )}
-              </View>
-            </ScrollView>
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity
-                style={styles.sendButton}
-                onPress={handleSubmit}>
-                <Text style={styles.sendButtonText}>Enviar</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.resetButton}
-                onPress={() =>
-                  resetForm({
-                    values: {
-                      id,
-                      name: '',
-                      description: '',
-                      logo: '',
-                      date_release: '',
-                      date_revision: '',
-                    },
-                  })
-                }>
-                <Text style={styles.resetButtonText}>Reiniciar</Text>
-              </TouchableOpacity>
-            </View>
-          </Fragment>
-        )}
-      </Formik>
+      />
     </View>
   );
 }

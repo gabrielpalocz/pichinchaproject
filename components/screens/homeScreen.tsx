@@ -3,7 +3,6 @@ import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
-  Button,
   Alert,
   FlatList,
   StyleSheet,
@@ -12,6 +11,7 @@ import {
 } from 'react-native';
 import type {HomeScreenProps} from '../types/typesFile';
 import {useFocusEffect} from '@react-navigation/native';
+import {authorId, baseUrl} from '../../constants';
 
 type ItemData = {
   id: string;
@@ -21,69 +21,6 @@ type ItemData = {
   date_release: Date;
   date_revision: Date;
 };
-
-const dateRelease = new Date('2023-02-01').toISOString();
-const dateRevision = new Date('2024-02-01').toISOString();
-
-// Momentary data, test purpose.
-const dataTest = [
-  {
-    id: '123455',
-    name: 'one',
-    description: 'Tarjeta de consumo bajo la modalidad de credito',
-    logo: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    date_release: dateRelease,
-    date_revision: dateRevision,
-  },
-  {
-    id: '123456',
-    name: 'two',
-    description: 'Tarjeta de consumo bajo la modalidad de credito',
-    logo: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    date_release: dateRelease,
-    date_revision: dateRevision,
-  },
-  {
-    id: '123457',
-    name: 'three',
-    description: 'Tarjeta de consumo bajo la modalidad de credito',
-    logo: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    date_release: dateRelease,
-    date_revision: dateRevision,
-  },
-  {
-    id: '123458',
-    name: 'four',
-    description: 'Tarjeta de consumo bajo la modalidad de credito',
-    logo: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    date_release: dateRelease,
-    date_revision: dateRevision,
-  },
-  {
-    id: '123459',
-    name: 'five',
-    description: 'Tarjeta de consumo bajo la modalidad de credito',
-    logo: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    date_release: dateRelease,
-    date_revision: dateRevision,
-  },
-  {
-    id: '123460',
-    name: 'six',
-    description: 'Tarjeta de consumo bajo la modalidad de credito',
-    logo: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    date_release: dateRelease,
-    date_revision: dateRevision,
-  },
-  {
-    id: '123461',
-    name: 'seven',
-    description: 'Tarjeta de consumo bajo la modalidad de credito',
-    logo: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    date_release: dateRelease,
-    date_revision: dateRevision,
-  },
-];
 
 type ItemProps = {
   item: ItemData;
@@ -127,17 +64,12 @@ const SearchNoResults = () => {
 };
 
 function HomeScreen({navigation}: HomeScreenProps) {
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState<ItemData[]>([]);
   const [searchText, setSearchText] = useState<string>('');
 
   const filteredData = data.filter((item: {name: string}) =>
     item.name.toLowerCase().includes(searchText.toLowerCase()),
   );
-
-  const authorId = '813498482';
-
-  const baseUrl =
-    'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros';
 
   // GET all data
   useFocusEffect(() => {

@@ -13,6 +13,8 @@ import type {
   DetailsScreenProps,
   DetailsScreenRouteProp,
 } from '../types/typesFile';
+import DeleteModal from '../ui-components/deleteModal';
+import {authorId, baseUrl} from '../../constants';
 
 type Item = {
   label: string;
@@ -38,6 +40,16 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
   const route = useRoute<DetailsScreenRouteProp>();
   const {id, name, description, logo, date_release, date_revision} =
     route.params;
+
+  const [bottomSheetVisible, setBottomSheetVisible] = React.useState(false);
+
+  const openBottomSheet = () => {
+    setBottomSheetVisible(true);
+  };
+
+  const closeBottomSheet = () => {
+    setBottomSheetVisible(false);
+  };
 
   const navigateToEdit = () => {
     navigation.navigate('Edit', {
@@ -74,19 +86,14 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
     },
   ];
 
-  const authorId = '813498482';
-
   const handleDelete = async (value: string) => {
     try {
-      const response = await fetch(
-        `https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/bp/products?id=${value}`,
-        {
-          method: 'DELETE',
-          headers: {
-            authorId,
-          },
+      const response = await fetch(`${baseUrl}/bp/products?id=${value}`, {
+        method: 'DELETE',
+        headers: {
+          authorId,
         },
-      );
+      });
 
       if (response.ok) {
         navigation.goBack();
@@ -114,19 +121,23 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
           />
         ))}
       </View>
-
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
           style={styles.editButton}
           onPress={() => navigateToEdit()}>
           <Text style={styles.editButtonText}>Editar</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.deleteButton}
-          onPress={() => handleDelete(id)}>
+        <TouchableOpacity style={styles.deleteButton} onPress={openBottomSheet}>
           <Text style={styles.deleteButtonText}>Eliminar</Text>
         </TouchableOpacity>
       </View>
+      <DeleteModal
+        visible={bottomSheetVisible}
+        onClose={closeBottomSheet}
+        id={id}
+        name={name}
+        handleDelete={handleDelete}
+      />
     </View>
   );
 }
