@@ -140,7 +140,6 @@ function HomeScreen({navigation}: HomeScreenProps) {
     'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros';
 
   // GET all data
-  // =========USAR CON focusEffect====================
   useFocusEffect(() => {
     const fetchData = async () => {
       try {
