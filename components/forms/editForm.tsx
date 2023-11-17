@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
+import moment from 'moment';
 
 type ItemData = {
   id: string;
@@ -50,22 +51,25 @@ const validationSchema = yup.object().shape({
     .max(200, 'Muy Largo!')
     .required('Este campo es requerido!'),
   logo: yup.string().required('Este campo es requerido!'),
-  date_release: yup.string().required('Este campo es requerido!'),
+  date_release: yup
+    .string()
+    .required('Este campo es requerido!')
+    .matches(/^\d{4}-\d{2}-\d{2}$/, 'El formato debe ser YYYY-MM-DD')
+    .test('fecha-valida', 'Ingrese una fecha válida', function (value) {
+      return moment(value, 'YYYY-MM-DD', true).isValid();
+    })
+    .test(
+      'fecha-futura',
+      'La fecha debe ser igual o mayor a la fecha actual',
+      function (value) {
+        return moment(value, 'YYYY-MM-DD').isSameOrAfter(moment(), 'day');
+      },
+    ),
   date_revision: yup.string().required('Este campo es requerido!'),
 });
 
 const EditForm: React.FC<FormProps> = ({onSubmit, data}) => {
   const {id, name, description, logo, date_release, date_revision} = data;
-  function convertToFormattedDate(isoDate: Date): string {
-    const dateObj = new Date(isoDate);
-
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const day = String(dateObj.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-  }
-
   return (
     <Formik
       initialValues={{
@@ -73,11 +77,24 @@ const EditForm: React.FC<FormProps> = ({onSubmit, data}) => {
         name,
         description,
         logo,
-        date_release: convertToFormattedDate(date_release),
-        date_revision: convertToFormattedDate(date_revision),
+        date_release: moment(date_release).format('YYYY-MM-DD'),
+        date_revision: moment(date_revision).format('YYYY-MM-DD'),
       }}
       validationSchema={validationSchema}
-      onSubmit={onSubmit}>
+      onSubmit={(values, actions) => {
+        let updatedValues = {...values};
+
+        const dateRevision = moment(values.date_release)
+          .add(1, 'years')
+          .format('YYYY-MM-DD');
+        actions.setFieldValue('date_revision', dateRevision);
+
+        updatedValues = {
+          ...updatedValues,
+          date_revision: dateRevision,
+        };
+        onSubmit(updatedValues);
+      }}>
       {({
         handleChange,
         handleBlur,
@@ -136,20 +153,7 @@ const EditForm: React.FC<FormProps> = ({onSubmit, data}) => {
                 style={styles.input}
                 placeholder="YYYY-MM-DD"
                 placeholderTextColor={'gray'}
-                onChangeText={text => {
-                  handleChange('date_release')(text);
-                  const enteredDate = new Date(text);
-                  if (!isNaN(enteredDate.getTime())) {
-                    const oneYearLater = new Date(
-                      enteredDate.getFullYear() + 1,
-                      enteredDate.getMonth(),
-                      enteredDate.getDate(),
-                    );
-                    handleChange('date_revision')(
-                      convertToFormattedDate(oneYearLater),
-                    );
-                  }
-                }}
+                onChangeText={handleChange('date_release')}
                 onBlur={handleBlur('date_release')}
                 value={values.date_release}
               />

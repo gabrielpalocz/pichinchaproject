@@ -5,6 +5,7 @@ import type {EditScreenProps, EditScreenRouteProp} from '../types/typesFile';
 import {useRoute} from '@react-navigation/native';
 import EditForm from '../forms/editForm';
 import {authorId, baseUrl} from '../../constants';
+import moment from 'moment';
 
 interface Values {
   id: string;
@@ -29,15 +30,10 @@ function EditScreen({navigation}: EditScreenProps) {
   const {id, name, description, logo, date_release, date_revision} =
     route.params;
 
-  const convertDatesToStrings = (values: Values): Values => {
-    return {
-      ...values,
-      date_release: values.date_release.toString(),
-      date_revision: values.date_revision.toString(),
-    };
-  };
-
   const navigateBackToDetails = (values: Values) => {
+    const dateRelease = moment(values.date_release).toDate();
+    const dateRevision = moment(values.date_revision).toDate();
+
     navigation.navigate({
       name: 'Details',
       params: {
@@ -45,8 +41,8 @@ function EditScreen({navigation}: EditScreenProps) {
         name: values.name,
         description: values.description,
         logo: values.logo,
-        date_release: new Date(new Date(values.date_release).toISOString()),
-        date_revision: new Date(new Date(values.date_revision).toISOString()),
+        date_release: dateRelease,
+        date_revision: dateRevision,
       },
       merge: true,
     });
