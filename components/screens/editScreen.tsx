@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import {Text, View, StyleSheet, Alert} from 'react-native';
 import type {EditScreenProps, EditScreenRouteProp} from '../types/typesFile';
@@ -15,15 +14,6 @@ interface Values {
   date_release: string;
   date_revision: string;
 }
-
-type ItemData = {
-  id: string;
-  name: string;
-  description: string;
-  logo: string;
-  date_release: Date;
-  date_revision: Date;
-};
 
 function EditScreen({navigation}: EditScreenProps) {
   const route = useRoute<EditScreenRouteProp>();
