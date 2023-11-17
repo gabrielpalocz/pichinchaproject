@@ -88,54 +88,6 @@ const styles = StyleSheet.create({
     color: 'black',
     marginTop: 15,
   },
-  input: {
-    borderColor: '#d6d8db',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    backgroundColor: 'white',
-    color: 'black',
-  },
-  contentView: {
-    flex: 1,
-    marginTop: 20,
-  },
-  titleField: {
-    marginTop: 20,
-    color: 'black',
-  },
-  onError: {
-    color: 'red',
-  },
-  disabledTextInput: {
-    opacity: 0.6,
-    backgroundColor: '#f0f0f0',
-  },
-  buttonsContainer: {
-    marginVertical: 30,
-  },
-  sendButton: {
-    backgroundColor: '#ffdd00',
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingVertical: 15,
-  },
-  sendButtonText: {
-    color: '#203668',
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  resetButton: {
-    backgroundColor: '#e9ecf3',
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingVertical: 15,
-  },
-  resetButtonText: {
-    color: '#203668',
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
 });
 
 export default EditScreen;
