@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
+import moment from 'moment';
 import {baseUrl} from '../../constants';
 
 interface Values {
@@ -54,21 +55,23 @@ const validationSchema = yup.object().shape({
     .max(200, 'Muy Largo!')
     .required('Este campo es requerido!'),
   logo: yup.string().required('Este campo es requerido!'),
-  date_release: yup.string().required('Este campo es requerido!'),
-  date_revision: yup.string().required('Este campo es requerido!'),
+  date_release: yup
+    .string()
+    .required('Este campo es requerido!')
+    .matches(/^\d{4}-\d{2}-\d{2}$/, 'El formato debe ser YYYY-MM-DD')
+    .test('fecha-valida', 'Ingrese una fecha válida', function (value) {
+      return moment(value, 'YYYY-MM-DD', true).isValid();
+    })
+    .test(
+      'fecha-futura',
+      'La fecha debe ser igual o mayor a la fecha actual',
+      function (value) {
+        return moment(value, 'YYYY-MM-DD').isSameOrAfter(moment(), 'day');
+      },
+    ),
 });
 
 const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
-  function convertToFormattedDate(isoDate: Date): string {
-    const dateObj = new Date(isoDate);
-
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const day = String(dateObj.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-  }
-
   return (
     <Formik
       initialValues={{
@@ -80,7 +83,20 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
         date_revision: '',
       }}
       validationSchema={validationSchema}
-      onSubmit={onSubmit}>
+      onSubmit={(values, actions) => {
+        let updatedValues = {...values};
+
+        const dateRevision = moment(values.date_release)
+          .add(1, 'years')
+          .format('YYYY-MM-DD');
+        actions.setFieldValue('date_revision', dateRevision);
+
+        updatedValues = {
+          ...updatedValues,
+          date_revision: dateRevision,
+        };
+        onSubmit(updatedValues);
+      }}>
       {({
         handleChange,
         handleBlur,
@@ -138,20 +154,7 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
                 style={styles.input}
                 placeholder="YYYY-MM-DD"
                 placeholderTextColor={'gray'}
-                onChangeText={text => {
-                  handleChange('date_release')(text);
-                  const enteredDate = new Date(text);
-                  if (!isNaN(enteredDate.getTime())) {
-                    const oneYearLater = new Date(
-                      enteredDate.getFullYear() + 1,
-                      enteredDate.getMonth(),
-                      enteredDate.getDate(),
-                    );
-                    handleChange('date_revision')(
-                      convertToFormattedDate(oneYearLater),
-                    );
-                  }
-                }}
+                onChangeText={handleChange('date_release')}
                 onBlur={handleBlur('date_release')}
                 value={values.date_release}
               />

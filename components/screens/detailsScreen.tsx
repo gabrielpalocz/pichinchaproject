@@ -8,6 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import {useRoute} from '@react-navigation/native';
+import moment from 'moment';
 import type {
   DetailsScreenProps,
   DetailsScreenRouteProp,
@@ -61,27 +62,17 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
     });
   };
 
-  function convertISOToFormattedDate(isoDate: Date): string {
-    const dateObj = new Date(isoDate);
-
-    const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const day = String(dateObj.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-  }
-
   const data: Item[] = [
     {label: 'Nombre', value: name},
     {label: 'Descripción', value: description},
     {label: 'Logo', value: logo, isImage: true},
     {
       label: 'Fecha de liberación',
-      value: convertISOToFormattedDate(date_release),
+      value: moment(date_release).format('YYYY-MM-DD'),
     },
     {
       label: 'Fecha de revisión',
-      value: convertISOToFormattedDate(date_revision),
+      value: moment(date_revision).format('YYYY-MM-DD'),
     },
   ];
 
