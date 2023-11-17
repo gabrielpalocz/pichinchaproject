@@ -107,9 +107,31 @@ const ItemSeparator = () => {
   return <View style={styles.separator} />;
 };
 
+const EmptyList = () => {
+  return (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyListText}>No hay productos para mostrar.</Text>
+    </View>
+  );
+};
+
+const SearchNoResults = () => {
+  return (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyListText}>
+        No hay coincidecias para su busqueda.
+      </Text>
+    </View>
+  );
+};
+
 function HomeScreen({navigation}: HomeScreenProps) {
-  const [data, setData] = useState<any>(dataTest);
+  const [data, setData] = useState<any>([]);
   const [searchText, setSearchText] = useState<string>('');
+
+  const filteredData = data.filter((item: {name: string}) =>
+    item.name.toLowerCase().includes(searchText.toLowerCase()),
+  );
 
   const authorId = '813498482';
 
@@ -144,10 +166,6 @@ function HomeScreen({navigation}: HomeScreenProps) {
 
   const handleSearch = (text: string) => {
     setSearchText(text);
-    const filteredData = dataTest.filter(item =>
-      item.name.toLowerCase().includes(text.toLowerCase()),
-    );
-    setData(filteredData);
   };
 
   const navigateToDetails = (item: ItemData) => {
@@ -171,15 +189,21 @@ function HomeScreen({navigation}: HomeScreenProps) {
         value={searchText}
         inputMode="search"
       />
-      <FlatList
-        data={data}
-        renderItem={({item}) => (
-          <Item item={item} onPress={() => navigateToDetails(item)} />
-        )}
-        keyExtractor={item => item.id}
-        contentContainerStyle={styles.containerFlatList}
-        ItemSeparatorComponent={ItemSeparator}
-      />
+      {data.length > 0 ? (
+        <FlatList
+          data={filteredData}
+          renderItem={({item}) => (
+            <Item item={item} onPress={() => navigateToDetails(item)} />
+          )}
+          keyExtractor={item => item.id}
+          contentContainerStyle={styles.containerFlatList}
+          ItemSeparatorComponent={ItemSeparator}
+          ListEmptyComponent={SearchNoResults}
+        />
+      ) : (
+        <EmptyList />
+      )}
+
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => navigation.navigate('Register')}>
@@ -255,6 +279,14 @@ const styles = StyleSheet.create({
     color: '#203668',
     textAlign: 'center',
     fontWeight: 'bold',
+  },
+  emptyContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyListText: {
+    color: 'black',
   },
 });
 
