@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -41,14 +41,14 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
   const {id, name, description, logo, date_release, date_revision} =
     route.params;
 
-  const [bottomSheetVisible, setBottomSheetVisible] = React.useState(false);
+  const [modalDeleteVisible, setModalDeleteVisible] = useState<boolean>(false);
 
-  const openBottomSheet = () => {
-    setBottomSheetVisible(true);
+  const openModalDelete = () => {
+    setModalDeleteVisible(true);
   };
 
-  const closeBottomSheet = () => {
-    setBottomSheetVisible(false);
+  const closeModalDelete = () => {
+    setModalDeleteVisible(false);
   };
 
   const navigateToEdit = () => {
@@ -127,13 +127,13 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
           onPress={() => navigateToEdit()}>
           <Text style={styles.editButtonText}>Editar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.deleteButton} onPress={openBottomSheet}>
+        <TouchableOpacity style={styles.deleteButton} onPress={openModalDelete}>
           <Text style={styles.deleteButtonText}>Eliminar</Text>
         </TouchableOpacity>
       </View>
       <DeleteModal
-        visible={bottomSheetVisible}
-        onClose={closeBottomSheet}
+        visible={modalDeleteVisible}
+        onClose={closeModalDelete}
         id={id}
         name={name}
         handleDelete={handleDelete}
