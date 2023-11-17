@@ -111,7 +111,12 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
             <View style={styles.contentView}>
               <Text style={styles.titleField}>ID</Text>
               <TextInput
-                style={styles.input}
+                style={[
+                  styles.input,
+                  touched.id && errors.id
+                    ? styles.onErrorBorder
+                    : styles.onNormalBorder,
+                ]}
                 onChangeText={handleChange('id')}
                 onBlur={handleBlur('id')}
                 value={values.id}
@@ -121,7 +126,12 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
               )}
               <Text style={styles.titleField}>Nombre</Text>
               <TextInput
-                style={styles.input}
+                style={[
+                  styles.input,
+                  touched.id && errors.id
+                    ? styles.onErrorBorder
+                    : styles.onNormalBorder,
+                ]}
                 onChangeText={handleChange('name')}
                 onBlur={handleBlur('name')}
                 value={values.name}
@@ -131,7 +141,12 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
               )}
               <Text style={styles.titleField}>Descripción</Text>
               <TextInput
-                style={styles.input}
+                style={[
+                  styles.input,
+                  touched.id && errors.id
+                    ? styles.onErrorBorder
+                    : styles.onNormalBorder,
+                ]}
                 onChangeText={handleChange('description')}
                 onBlur={handleBlur('description')}
                 value={values.description}
@@ -141,7 +156,12 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
               )}
               <Text style={styles.titleField}>Logo</Text>
               <TextInput
-                style={styles.input}
+                style={[
+                  styles.input,
+                  touched.id && errors.id
+                    ? styles.onErrorBorder
+                    : styles.onNormalBorder,
+                ]}
                 onChangeText={handleChange('logo')}
                 onBlur={handleBlur('logo')}
                 value={values.logo}
@@ -151,7 +171,12 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
               )}
               <Text style={styles.titleField}>Fecha de Liberación</Text>
               <TextInput
-                style={styles.input}
+                style={[
+                  styles.input,
+                  touched.id && errors.id
+                    ? styles.onErrorBorder
+                    : styles.onNormalBorder,
+                ]}
                 placeholder="YYYY-MM-DD"
                 placeholderTextColor={'gray'}
                 onChangeText={handleChange('date_release')}
@@ -163,7 +188,11 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
               )}
               <Text style={styles.titleField}>Fecha de Revisión</Text>
               <TextInput
-                style={[styles.input, styles.disabledTextInput]}
+                style={[
+                  styles.input,
+                  styles.disabledTextInput,
+                  styles.onNormalBorder,
+                ]}
                 onChangeText={handleChange('date_revision')}
                 onBlur={handleBlur('date_revision')}
                 value={values.date_revision}
@@ -192,7 +221,6 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
 
 const styles = StyleSheet.create({
   input: {
-    borderColor: '#d6d8db',
     borderWidth: 1,
     paddingHorizontal: 10,
     borderRadius: 5,
@@ -209,6 +237,12 @@ const styles = StyleSheet.create({
   },
   onError: {
     color: 'red',
+  },
+  onErrorBorder: {
+    borderColor: 'red',
+  },
+  onNormalBorder: {
+    borderColor: '#d6d8db',
   },
   disabledTextInput: {
     opacity: 0.6,
