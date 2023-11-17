@@ -21,13 +21,24 @@ interface Values {
   date_revision: string;
 }
 
-//===============FALTA VALIDACION DE ID POR CONSUMO===========================
 const validationSchema = yup.object().shape({
   id: yup
     .string()
     .min(3, 'Muy Corto!')
     .max(10, 'Muy Largo!')
-    .required('Este campo es requerido!'),
+    .required('Este campo es requerido!')
+    .test('isValidId', 'ID inválido', async value => {
+      try {
+        const response = await fetch(
+          `https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/bp/products/verification?id=${value}`,
+        );
+        const data = await response.json();
+        return response.ok && !data;
+      } catch (error) {
+        console.error('Error al validar el ID:', error);
+        return false;
+      }
+    }),
   name: yup
     .string()
     .min(5, 'Muy Corto!')
