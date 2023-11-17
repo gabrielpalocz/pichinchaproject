@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import {Text, View, StyleSheet, Alert} from 'react-native';
 import type {RegisterScreenProps} from '../types/typesFile';
