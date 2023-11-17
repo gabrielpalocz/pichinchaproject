@@ -39,6 +39,17 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
   const {id, name, description, logo, date_release, date_revision} =
     route.params;
 
+  const navigateToEdit = () => {
+    navigation.navigate('Edit', {
+      id,
+      name,
+      description,
+      logo,
+      date_release,
+      date_revision,
+    });
+  };
+
   function convertISOToFormattedDate(isoDate: Date): string {
     const dateObj = new Date(isoDate);
 
@@ -105,7 +116,9 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
       </View>
 
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.editButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.editButton}
+          onPress={() => navigateToEdit()}>
           <Text style={styles.editButtonText}>Editar</Text>
         </TouchableOpacity>
         <TouchableOpacity

@@ -12,6 +12,14 @@ export type RootStackParamList = {
     date_revision: Date;
   };
   Register: undefined;
+  Edit: {
+    id: string;
+    name: string;
+    description: string;
+    logo: string;
+    date_release: Date;
+    date_revision: Date;
+  };
 };
 export type HomeScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -26,3 +34,8 @@ export type RegisterScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'Register'
 >;
+export type EditScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'Edit'
+>;
+export type EditScreenRouteProp = RouteProp<RootStackParamList, 'Edit'>;
