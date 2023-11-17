@@ -11,6 +11,7 @@ import {
   TextInput,
 } from 'react-native';
 import type {HomeScreenProps} from '../types/typesFile';
+import {useFocusEffect} from '@react-navigation/native';
 
 type ItemData = {
   id: string;
@@ -140,7 +141,7 @@ function HomeScreen({navigation}: HomeScreenProps) {
 
   // GET all data
   // =========USAR CON focusEffect====================
-  useEffect(() => {
+  useFocusEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${baseUrl}/bp/products`, {
@@ -162,7 +163,7 @@ function HomeScreen({navigation}: HomeScreenProps) {
     };
 
     fetchData();
-  }, []);
+  });
 
   const handleSearch = (text: string) => {
     setSearchText(text);

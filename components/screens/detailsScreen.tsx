@@ -56,6 +56,31 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
     },
   ];
 
+  const authorId = '813498482';
+
+  const handleDelete = async (value: string) => {
+    try {
+      const response = await fetch(
+        `https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/bp/products?id=${value}`,
+        {
+          method: 'DELETE',
+          headers: {
+            authorId,
+          },
+        },
+      );
+
+      if (response.ok) {
+        console.log('Datos enviados correctamente');
+        console.log(response);
+      } else {
+        console.error('Error al enviar datos:', response.status);
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.idContainer}>
@@ -77,7 +102,9 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
         <TouchableOpacity style={styles.editButton} onPress={() => {}}>
           <Text style={styles.editButtonText}>Editar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.deleteButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.deleteButton}
+          onPress={() => handleDelete(id)}>
           <Text style={styles.deleteButtonText}>Eliminar</Text>
         </TouchableOpacity>
       </View>

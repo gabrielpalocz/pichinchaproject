@@ -65,7 +65,7 @@ function RegisterScreen({navigation}: RegisterScreenProps) {
     return `${year}-${month}-${day}`;
   }
   const authorId = '813498482';
-  const handleOnSubmit = async (values: any) => {
+  const handleOnSubmit = async (values: Values) => {
     try {
       const response = await fetch(
         'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/bp/products',
