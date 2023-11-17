@@ -64,7 +64,7 @@ function EditScreen({navigation}: EditScreenProps) {
       const response = await fetch(
         'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/bp/products',
         {
-          method: 'POST',
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
             authorId,
