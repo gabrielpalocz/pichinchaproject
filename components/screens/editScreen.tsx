@@ -74,7 +74,18 @@ function EditScreen({navigation}: EditScreenProps) {
       );
 
       if (response.ok) {
-        navigation.goBack();
+        navigation.navigate({
+          name: 'Details',
+          params: {
+            id: values.id,
+            name: values.name,
+            description: values.description,
+            logo: values.logo,
+            date_release: new Date(values.date_release),
+            date_revision: new Date(values.date_revision),
+          },
+          merge: true,
+        });
       } else {
         Alert.alert('Ha ocurrido un error', `${response.status}`);
       }
