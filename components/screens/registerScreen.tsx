@@ -28,7 +28,7 @@ const validationSchema = yup.object().shape({
     .min(3, 'Muy Corto!')
     .max(10, 'Muy Largo!')
     .required('Este campo es requerido!')
-    .test('isValidId', 'ID inválido', async value => {
+    .test('isValidId', 'ID no válido!', async value => {
       try {
         const response = await fetch(
           `https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/bp/products/verification?id=${value}`,
