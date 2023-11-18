@@ -1,6 +1,7 @@
 import type {RouteProp} from '@react-navigation/native';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 
+// Types
 export type RootStackParamList = {
   Home: undefined;
   Details: {

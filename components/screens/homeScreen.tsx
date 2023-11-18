@@ -17,6 +17,7 @@ type ItemProps = {
   onPress: () => void;
 };
 
+// Item to render - flatList
 const Item = ({item, onPress}: ItemProps) => (
   <TouchableOpacity onPress={onPress} style={styles.item}>
     <View style={styles.itemViewContainer}>
@@ -31,10 +32,12 @@ const Item = ({item, onPress}: ItemProps) => (
   </TouchableOpacity>
 );
 
+// To separate the items
 const ItemSeparator = () => {
   return <View style={styles.separator} />;
 };
 
+// In case that there is nothing to show
 const EmptyList = () => {
   return (
     <View style={styles.emptyContainer}>
@@ -43,6 +46,7 @@ const EmptyList = () => {
   );
 };
 
+// If the search returns no results
 const SearchNoResults = () => {
   return (
     <View style={styles.emptyContainer}>
@@ -57,6 +61,7 @@ function HomeScreen({navigation}: HomeScreenProps) {
   const [data, setData] = useState<ItemData[]>([]);
   const [searchText, setSearchText] = useState<string>('');
 
+  // To filter the data and only show what is filtered
   const filteredData = data.filter((item: {name: string}) =>
     item.name.toLowerCase().includes(searchText.toLowerCase()),
   );
@@ -77,7 +82,7 @@ function HomeScreen({navigation}: HomeScreenProps) {
         }
 
         const responseData = await response.json();
-        setData(responseData);
+        setData(responseData); // Set the data from server to data
       } catch (error) {
         Alert.alert('Ha ocurrido un error', `${error}`);
       }
@@ -86,10 +91,12 @@ function HomeScreen({navigation}: HomeScreenProps) {
     fetchData();
   });
 
+  // Search function
   const handleSearch = (text: string) => {
     setSearchText(text);
   };
 
+  // To go to Details screen
   const navigateToDetails = (item: ItemData) => {
     navigation.navigate('Details', {
       id: item.id,

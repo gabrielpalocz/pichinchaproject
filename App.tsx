@@ -9,6 +9,7 @@ import type {RootStackParamList} from './components/types/typesFile';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+// Roots
 function App(): JSX.Element {
   return (
     <NavigationContainer>

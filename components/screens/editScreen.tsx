@@ -14,6 +14,7 @@ function EditScreen({navigation}: EditScreenProps) {
   const {id, name, description, logo, date_release, date_revision} =
     route.params;
 
+  // To go back to details screen
   const navigateBackToDetails = (values: ItemData) => {
     navigation.navigate({
       name: 'Details',
@@ -29,6 +30,7 @@ function EditScreen({navigation}: EditScreenProps) {
     });
   };
 
+  // To Post or update an item
   const handleOnSubmit = async (values: ItemData) => {
     try {
       const response = await fetch(`${baseUrl}/bp/products`, {

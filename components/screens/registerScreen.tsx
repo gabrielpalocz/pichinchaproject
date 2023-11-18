@@ -5,6 +5,7 @@ import RegisterForm from '../forms/registerForm';
 import {authorId, baseUrl} from '../../constants';
 
 function RegisterScreen({navigation}: RegisterScreenProps) {
+  // To Post or add an item
   const handleOnSubmit = async (values: ItemData) => {
     try {
       const response = await fetch(`${baseUrl}/bp/products`, {

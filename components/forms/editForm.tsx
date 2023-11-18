@@ -25,6 +25,7 @@ interface FormProps {
   onSubmit: (values: Values) => void;
 }
 
+// Validation Schema to control what the user enters
 const validationSchema = yup.object().shape({
   id: yup
     .string()
@@ -59,6 +60,7 @@ const validationSchema = yup.object().shape({
   date_revision: yup.string().required('Este campo es requerido!'),
 });
 
+// Form to Edit screen
 const EditForm: React.FC<FormProps> = ({onSubmit, data}) => {
   const {id, name, description, logo, date_release, date_revision} = data;
   return (

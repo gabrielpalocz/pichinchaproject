@@ -22,6 +22,7 @@ type Item = {
   isImage?: boolean;
 };
 
+// Item to render
 const InfoItem: React.FC<Item> = ({label, value, isImage = false}) => {
   return isImage ? (
     <View>
@@ -43,14 +44,17 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
 
   const [modalDeleteVisible, setModalDeleteVisible] = useState<boolean>(false);
 
+  // Function to open delete modal
   const openModalDelete = () => {
     setModalDeleteVisible(true);
   };
 
+  // Function to close delete modal
   const closeModalDelete = () => {
     setModalDeleteVisible(false);
   };
 
+  // To go to Edit screen
   const navigateToEdit = () => {
     navigation.navigate('Edit', {
       id,
@@ -62,6 +66,7 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
     });
   };
 
+  // To guide the rendering of the items
   const data: Item[] = [
     {label: 'Nombre', value: name},
     {label: 'Descripción', value: description},
@@ -76,6 +81,7 @@ function DetailsScreen({navigation}: DetailsScreenProps) {
     },
   ];
 
+  // To Delete an item with id
   const handleDelete = async (value: string) => {
     try {
       const response = await fetch(`${baseUrl}/bp/products?id=${value}`, {

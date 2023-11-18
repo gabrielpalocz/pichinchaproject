@@ -26,6 +26,7 @@ interface FormProps {
   onSubmit: (values: Values) => void;
 }
 
+// Validation Schema to control what the user enters
 const validationSchema = yup.object().shape({
   id: yup
     .string()
@@ -71,6 +72,7 @@ const validationSchema = yup.object().shape({
     ),
 });
 
+// Form to register screen
 const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
   return (
     <Formik
