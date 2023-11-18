@@ -122,6 +122,7 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
                 onChangeText={handleChange('id')}
                 onBlur={handleBlur('id')}
                 value={values.id}
+                testID="ID-INPUT"
               />
               {touched.id && errors.id && (
                 <Text style={styles.onError}>{errors.id}</Text>
@@ -137,6 +138,7 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
                 onChangeText={handleChange('name')}
                 onBlur={handleBlur('name')}
                 value={values.name}
+                testID="NAME-INPUT"
               />
               {touched.name && errors.name && (
                 <Text style={styles.onError}>{errors.name}</Text>
@@ -152,6 +154,7 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
                 onChangeText={handleChange('description')}
                 onBlur={handleBlur('description')}
                 value={values.description}
+                testID="DES-INPUT"
               />
               {touched.description && errors.description && (
                 <Text style={styles.onError}>{errors.description}</Text>
@@ -167,6 +170,7 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
                 onChangeText={handleChange('logo')}
                 onBlur={handleBlur('logo')}
                 value={values.logo}
+                testID="LOGO-INPUT"
               />
               {touched.logo && errors.logo && (
                 <Text style={styles.onError}>{errors.logo}</Text>
@@ -184,6 +188,7 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
                 onChangeText={handleChange('date_release')}
                 onBlur={handleBlur('date_release')}
                 value={values.date_release}
+                testID="DREL-INPUT"
               />
               {touched.date_release && errors.date_release && (
                 <Text style={styles.onError}>{errors.date_release}</Text>
@@ -199,6 +204,7 @@ const RegisterForm: React.FC<FormProps> = ({onSubmit}) => {
                 onBlur={handleBlur('date_revision')}
                 value={values.date_revision}
                 editable={false}
+                testID="DREV-INPUT"
               />
               {touched.date_revision && errors.date_revision && (
                 <Text style={styles.onError}>{errors.date_revision}</Text>
