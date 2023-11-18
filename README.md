@@ -22,7 +22,7 @@ Asegúrate de tener instalado lo siguiente antes de comenzar:
 
 Clona el repositorio de GitHub en tu máquina local:
 
-git clone https://github.com/tu_usuario/tu_repositorio.git
+git clone https://github.com/gabrielpalocz/pichinchaproject.git
 
 ### Instalar Dependencias
 
