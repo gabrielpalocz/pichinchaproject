@@ -39,3 +39,11 @@ export type EditScreenProps = NativeStackScreenProps<
   'Edit'
 >;
 export type EditScreenRouteProp = RouteProp<RootStackParamList, 'Edit'>;
+export type ItemData = {
+  id: string;
+  name: string;
+  description: string;
+  logo: string;
+  date_release: string;
+  date_revision: string;
+};

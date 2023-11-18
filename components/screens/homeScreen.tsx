@@ -8,18 +8,9 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import type {HomeScreenProps} from '../types/typesFile';
+import type {HomeScreenProps, ItemData} from '../types/typesFile';
 import {useFocusEffect} from '@react-navigation/native';
 import {authorId, baseUrl} from '../../constants';
-
-type ItemData = {
-  id: string;
-  name: string;
-  description: string;
-  logo: string;
-  date_release: string;
-  date_revision: string;
-};
 
 type ItemProps = {
   item: ItemData;

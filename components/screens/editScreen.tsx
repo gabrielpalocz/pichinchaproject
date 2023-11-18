@@ -1,25 +1,20 @@
 import React from 'react';
 import {Text, View, StyleSheet, Alert} from 'react-native';
-import type {EditScreenProps, EditScreenRouteProp} from '../types/typesFile';
 import {useRoute} from '@react-navigation/native';
+import type {
+  EditScreenProps,
+  EditScreenRouteProp,
+  ItemData,
+} from '../types/typesFile';
 import EditForm from '../forms/editForm';
 import {authorId, baseUrl} from '../../constants';
-
-interface Values {
-  id: string;
-  name: string;
-  description: string;
-  logo: string;
-  date_release: string;
-  date_revision: string;
-}
 
 function EditScreen({navigation}: EditScreenProps) {
   const route = useRoute<EditScreenRouteProp>();
   const {id, name, description, logo, date_release, date_revision} =
     route.params;
 
-  const navigateBackToDetails = (values: Values) => {
+  const navigateBackToDetails = (values: ItemData) => {
     navigation.navigate({
       name: 'Details',
       params: {
@@ -34,7 +29,7 @@ function EditScreen({navigation}: EditScreenProps) {
     });
   };
 
-  const handleOnSubmit = async (values: Values) => {
+  const handleOnSubmit = async (values: ItemData) => {
     try {
       const response = await fetch(`${baseUrl}/bp/products`, {
         method: 'PUT',

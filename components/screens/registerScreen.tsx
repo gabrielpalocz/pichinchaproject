@@ -1,20 +1,11 @@
 import React from 'react';
 import {Text, View, StyleSheet, Alert} from 'react-native';
-import type {RegisterScreenProps} from '../types/typesFile';
+import type {RegisterScreenProps, ItemData} from '../types/typesFile';
 import RegisterForm from '../forms/registerForm';
 import {authorId, baseUrl} from '../../constants';
 
-interface Values {
-  id: string;
-  name: string;
-  description: string;
-  logo: string;
-  date_release: string;
-  date_revision: string;
-}
-
 function RegisterScreen({navigation}: RegisterScreenProps) {
-  const handleOnSubmit = async (values: Values) => {
+  const handleOnSubmit = async (values: ItemData) => {
     try {
       const response = await fetch(`${baseUrl}/bp/products`, {
         method: 'POST',
