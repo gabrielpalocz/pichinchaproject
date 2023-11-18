@@ -11,15 +11,6 @@ import {Formik} from 'formik';
 import * as yup from 'yup';
 import moment from 'moment';
 
-type ItemData = {
-  id: string;
-  name: string;
-  description: string;
-  logo: string;
-  date_release: Date;
-  date_revision: Date;
-};
-
 interface Values {
   id: string;
   name: string;
@@ -30,7 +21,7 @@ interface Values {
 }
 
 interface FormProps {
-  data: ItemData;
+  data: Values;
   onSubmit: (values: Values) => void;
 }
 
@@ -109,7 +100,11 @@ const EditForm: React.FC<FormProps> = ({onSubmit, data}) => {
             <View style={styles.contentView}>
               <Text style={styles.titleField}>ID</Text>
               <TextInput
-                style={[styles.input, styles.disabledTextInput]}
+                style={[
+                  styles.input,
+                  styles.disabledTextInput,
+                  styles.onNormalBorder,
+                ]}
                 onChangeText={handleChange('id')}
                 onBlur={handleBlur('id')}
                 value={values.id}
@@ -120,7 +115,12 @@ const EditForm: React.FC<FormProps> = ({onSubmit, data}) => {
               )}
               <Text style={styles.titleField}>Nombre</Text>
               <TextInput
-                style={styles.input}
+                style={[
+                  styles.input,
+                  touched.name && errors.name
+                    ? styles.onErrorBorder
+                    : styles.onNormalBorder,
+                ]}
                 onChangeText={handleChange('name')}
                 onBlur={handleBlur('name')}
                 value={values.name}
@@ -130,7 +130,12 @@ const EditForm: React.FC<FormProps> = ({onSubmit, data}) => {
               )}
               <Text style={styles.titleField}>Descripción</Text>
               <TextInput
-                style={styles.input}
+                style={[
+                  styles.input,
+                  touched.description && errors.description
+                    ? styles.onErrorBorder
+                    : styles.onNormalBorder,
+                ]}
                 onChangeText={handleChange('description')}
                 onBlur={handleBlur('description')}
                 value={values.description}
@@ -140,7 +145,12 @@ const EditForm: React.FC<FormProps> = ({onSubmit, data}) => {
               )}
               <Text style={styles.titleField}>Logo</Text>
               <TextInput
-                style={styles.input}
+                style={[
+                  styles.input,
+                  touched.logo && errors.logo
+                    ? styles.onErrorBorder
+                    : styles.onNormalBorder,
+                ]}
                 onChangeText={handleChange('logo')}
                 onBlur={handleBlur('logo')}
                 value={values.logo}
@@ -150,7 +160,12 @@ const EditForm: React.FC<FormProps> = ({onSubmit, data}) => {
               )}
               <Text style={styles.titleField}>Fecha de Liberación</Text>
               <TextInput
-                style={styles.input}
+                style={[
+                  styles.input,
+                  touched.date_release && errors.date_release
+                    ? styles.onErrorBorder
+                    : styles.onNormalBorder,
+                ]}
                 placeholder="YYYY-MM-DD"
                 placeholderTextColor={'gray'}
                 onChangeText={handleChange('date_release')}
@@ -162,15 +177,15 @@ const EditForm: React.FC<FormProps> = ({onSubmit, data}) => {
               )}
               <Text style={styles.titleField}>Fecha de Revisión</Text>
               <TextInput
-                style={[styles.input, styles.disabledTextInput]}
+                style={[
+                  styles.input,
+                  styles.disabledTextInput,
+                  styles.onNormalBorder,
+                ]}
                 onChangeText={handleChange('date_revision')}
-                onBlur={handleBlur('date_revision')}
                 value={values.date_revision}
                 editable={false}
               />
-              {touched.date_revision && errors.date_revision && (
-                <Text style={styles.onError}>{errors.date_revision}</Text>
-              )}
             </View>
           </ScrollView>
           <View style={styles.buttonsContainer}>
@@ -202,7 +217,6 @@ const EditForm: React.FC<FormProps> = ({onSubmit, data}) => {
 
 const styles = StyleSheet.create({
   input: {
-    borderColor: '#d6d8db',
     borderWidth: 1,
     paddingHorizontal: 10,
     borderRadius: 5,
@@ -219,6 +233,12 @@ const styles = StyleSheet.create({
   },
   onError: {
     color: 'red',
+  },
+  onErrorBorder: {
+    borderColor: 'red',
+  },
+  onNormalBorder: {
+    borderColor: '#d6d8db',
   },
   disabledTextInput: {
     opacity: 0.6,
