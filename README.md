@@ -26,7 +26,7 @@ git clone https://github.com/gabrielpalocz/pichinchaproject.git
 
 ### Instalar Dependencias
 
-cd tu_repositorio
+cd pichinchaproject
 
 npm install O yarn install
 
