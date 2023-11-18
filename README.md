@@ -11,7 +11,9 @@ Esta guía es para instalar y ejecutar la aplicación utilizando React Native.
 Asegúrate de tener instalado lo siguiente antes de comenzar:
 
 -Node.js (preferiblemente la última versión estable)
+
 -npm (Node Package Manager) o yarn
+
 -Git
 
 ## Pasos de Instalación
